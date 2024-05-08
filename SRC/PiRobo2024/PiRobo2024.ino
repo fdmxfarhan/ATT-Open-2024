@@ -29,12 +29,12 @@ bool rl;
 #define out_cnt_timeout 40
 #define out_move 5
 /////pi 1
-#define x_robot1 111
-#define y_robot1 150
+#define x_robot1 98
+#define y_robot1 143
 /////
 /////pi 2
-#define x_robot2 114
-#define y_robot2 153
+#define x_robot2 115
+#define y_robot2 157
 #define near_dis  120
 /////
 int x_robot, y_robot;
@@ -46,5 +46,5 @@ void setup() {
 }
 
 void loop() {
-  AI_2();
+  AI_3();
 }

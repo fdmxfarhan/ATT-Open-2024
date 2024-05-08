@@ -424,7 +424,7 @@ void catch_ball() {
   }
 }
 void out() {
-  if(Ball_In_Kicker && is_goal){
+  if(Ball_In_Kicker){
     return;
   }
   out_cnt = 0;
@@ -667,10 +667,10 @@ void AI_1(){
   else{
     rl = false;
   }
-  if(direction_ball == 0 && (distance_ball > near_dis || distance_ball < 32) && is_ball && !Ball_In_Kicker){
-    moveForSec(0, 2);
-  }
-  else if (Ball_In_Kicker) {
+  // if(direction_ball == 0 && (distance_ball > near_dis || distance_ball < 32) && is_ball && !Ball_In_Kicker){
+  //   moveForSec(0, 2);
+  // }
+  if (Ball_In_Kicker) {
     spinon;
     // look_back = true;
     if (is_goal) {
@@ -754,7 +754,7 @@ void AI_2(){
   if(direction_ball == 0 && (distance_ball > near_dis || distance_ball < 32) && is_ball && !Ball_In_Kicker){
     moveForSec(0, 2);
   }
-  else if (Ball_In_Kicker) {
+  if (Ball_In_Kicker) {
     spinon;
     look_back = true;
     sensors();
@@ -808,6 +808,60 @@ void AI_2(){
         else  stop();
       }
     }
+  }
+  else if (is_ball){
+    spinon;
+    look_back = false;
+    arrived_to_goal = false;
+    turned_back_cnt = 0;
+    Ball_in_kick_init = false;
+    if (distance_ball >= 50){ //dor
+      v = vm;
+      if (direction_ball == 0) move(0);
+      else if (direction_ball == 1) move(2);
+      else if (direction_ball == 15) move(14);
+      else if (direction_ball < 8 && direction_ball > 1) move(direction_ball + 3);
+      else move(direction_ball - 3);
+    } 
+    else {        //////////nazdik
+      v = 0.8 * vm;
+      if (direction_ball == 0) move(0);
+      else if (direction_ball <= 2 && direction_ball > 0) move(direction_ball + 3);
+      else if (direction_ball <= 8 && direction_ball > 2) move(direction_ball + 5);
+      else if (direction_ball > 8 && direction_ball <= 13) move(direction_ball - 5);
+      else move(direction_ball - 3);
+    }
+  }
+  else {
+    look_back = false;
+    arrived_to_goal = false;
+    Ball_in_kick_init = false;
+    if(shb < back_Distance){
+      motor(-130 + dif , -130 - dif , 130 - dif , 130 + dif);
+    }
+    else{
+      stop();
+    }
+    spinoff;
+  }
+}
+void AI_3(){
+  sensors();
+  print_all();
+  // out_sharp();
+  out();
+  // strat_1();
+  if(shr > shl){
+    rl = true;
+  }
+  else{
+    rl = false;
+  }
+  // if(direction_ball == 0 && (distance_ball > near_dis || distance_ball < 32) && is_ball && !Ball_In_Kicker){
+  //   moveForSec(0, 2);
+  // }
+  if (Ball_In_Kicker) {
+    shoot();  
   }
   else if (is_ball){
     spinon;
